@@ -5,7 +5,7 @@ from random import randint
 curses.initscr()
 win = curses.newwin(20, 60, 0, 0) # y,x
 win.keypad(1)
-curses.noecho()
+# curses.noecho()
 curses.curs_set(0)
 win.border(0)
 win.nodelay(1) # -1
@@ -15,9 +15,15 @@ snake = [(4, 10), (4, 9), (4, 8)]
 food = (10, 20)
 
 win.addch(food[0], food[1], '#')
+
 # game logic
 score = 0
 ESC = 27
+h = 104
+j = 106
+k = 107
+l = 108
+
 key = curses.KEY_RIGHT
 
 while key != ESC:
@@ -28,19 +34,28 @@ while key != ESC:
     event = win.getch()
     key = event if event != -1 else prev_key
 
-    if key not in [curses.KEY_LEFT, curses.KEY_RIGHT, curses.KEY_UP, curses.KEY_DOWN, ESC]:
+    if key not in [h, j, k, l, curses.KEY_LEFT, curses.KEY_RIGHT, curses.KEY_UP, curses.KEY_DOWN, ESC]:
         key = prev_key
 
     # calculate next coordinates
     y = snake[0][0]
     x = snake[0][1]
+
     if key == curses.KEY_DOWN:
+        y += 1
+    if key == j:
         y += 1
     if key == curses.KEY_UP:
         y -= 1
+    if key == k:
+        y -= 1
     if key == curses.KEY_LEFT:
         x -= 1
+    if key == h:
+        x -= 1
     if key == curses.KEY_RIGHT:
+        x += 1
+    if key == l:
         x += 1
 
     snake.insert(0, (y, x)) # append 0(n)
